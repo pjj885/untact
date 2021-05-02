@@ -1,6 +1,7 @@
 package com.skhynix.untact.controller;
 
 import com.skhynix.untact.dto.Article;
+import com.skhynix.untact.dto.ResultData;
 import com.skhynix.untact.util.Util;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,34 +41,27 @@ public class UsrArticleController {
 
     @RequestMapping("/usr/article/doAdd")
     @ResponseBody
-    public Map<String, Object> doAdd(String title, String body){
+    public ResultData doAdd(String title, String body){
         String regDate = Util.getNowDateStr();
         String updateDate = regDate;
 
         articles.add(new Article(++articlesLastId, regDate, updateDate, title, body));
 
-//        Map<String, Object> rs = new HashMap<>();
-//        rs.put("resultCode", "S-1");
-//        rs.put("msg", "성공하였습니다.");
-//        rs.put("id", articlesLastId);
-//
-//        return rs;
-
-        return Util.mapOf("resultCode", "S-1", "msg", "성공하였습니다.", "id", articlesLastId);
+        return new ResultData("S-1","성공하였습니다.", "id", articlesLastId);
     }
 
     @RequestMapping("/usr/article/doDelete")
     @ResponseBody
-    public Map<String, Object> doDelete(int id){
+    public ResultData doDelete(int id){
 
         boolean deleteArticleRS = deleteArticle(id);
 
         Map<String, Object> rs = new HashMap<>();
 
         if (deleteArticleRS == false){
-            return Util.mapOf("resultCode", "F-1", "msg", "해당 게시물이 존재하지 않습니다.");
+            return new ResultData("F-1", "해당 게시물이 존재하지 않습니다.");
         }
-            return Util.mapOf("resultCode", "S-1", "msg", "성공하였습니다.", "id", id);
+            return new ResultData("S-1", "성공하였습니다.", "id", id);
         }
 
     private boolean deleteArticle(int id) {
@@ -82,7 +76,7 @@ public class UsrArticleController {
 
     @RequestMapping("/usr/article/doModify")
     @ResponseBody
-    public Map<String, Object> doModify(int id, String title, String body){
+    public ResultData doModify(int id, String title, String body){
         Article selArticle = null;
 
         for (Article article : articles) {
@@ -95,18 +89,12 @@ public class UsrArticleController {
         Map<String, Object> rs = new HashMap<>();
 
         if (selArticle == null){
-//            rs.put("resultCode", "F-1");
-//            rs.put("msg", String.format("%d번 게시물은 존재하지 않습니다.", id));
-            return Util.mapOf("resultCode", "F-1", "msg", String.format("%d번 게시물은 존재하지 않습니다.", id));
+            return new ResultData("F-1", String.format("%d번 게시물은 존재하지 않습니다.", id));
         }
         selArticle.setUpdateDate(Util.getNowDateStr());
         selArticle.setTitle(title);
         selArticle.setBody(body);
 
-//            rs.put("mssultCode", "S-1");
-//            rs.put("msg", String.format("%d번 게시물이 수정되었습니다.", id));
-//            rs.put("id", id);
-
-        return Util.mapOf("mssultCode", "S-1", "msg", String.format("%d번 게시물이 수정되었습니다.", id), "id", id);
+        return new ResultData("S-1", String.format("%d번 게시물이 수정되었습니다.", id), "id", id);
     }
 }
