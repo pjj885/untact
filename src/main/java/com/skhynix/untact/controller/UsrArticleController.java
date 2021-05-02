@@ -46,12 +46,14 @@ public class UsrArticleController {
 
         articles.add(new Article(++articlesLastId, regDate, updateDate, title, body));
 
-        Map<String, Object> rs = new HashMap<>();
-        rs.put("resultCode", "S-1");
-        rs.put("msg", "성공하였습니다.");
-        rs.put("id", articlesLastId);
+//        Map<String, Object> rs = new HashMap<>();
+//        rs.put("resultCode", "S-1");
+//        rs.put("msg", "성공하였습니다.");
+//        rs.put("id", articlesLastId);
+//
+//        return rs;
 
-        return rs;
+        return Util.mapOf("resultCode", "S-1", "msg", "성공하였습니다.", "id", articlesLastId);
     }
 
     @RequestMapping("/usr/article/doDelete")
@@ -62,19 +64,11 @@ public class UsrArticleController {
 
         Map<String, Object> rs = new HashMap<>();
 
-        if (deleteArticleRS){
-        rs.put("resultCode", "S-1");
-        rs.put("msg", "성공하였습니다.");
+        if (deleteArticleRS == false){
+            return Util.mapOf("resultCode", "F-1", "msg", "해당 게시물이 존재하지 않습니다.");
         }
-        else {
-        rs.put("resultCode", "F-1");
-        rs.put("msg", "해당 게시물이 존재하지 않습니다.");
-            
+            return Util.mapOf("resultCode", "S-1", "msg", "성공하였습니다.", "id", id);
         }
-        rs.put("id", id);
-
-        return rs;
-    }
 
     private boolean deleteArticle(int id) {
         for (Article article : articles) {
@@ -101,19 +95,18 @@ public class UsrArticleController {
         Map<String, Object> rs = new HashMap<>();
 
         if (selArticle == null){
-            rs.put("resultCode", "F-1");
-            rs.put("msg", String.format("%d번 게시물은 존재하지 않습니다.", id));
-            return rs;
+//            rs.put("resultCode", "F-1");
+//            rs.put("msg", String.format("%d번 게시물은 존재하지 않습니다.", id));
+            return Util.mapOf("resultCode", "F-1", "msg", String.format("%d번 게시물은 존재하지 않습니다.", id));
         }
         selArticle.setUpdateDate(Util.getNowDateStr());
         selArticle.setTitle(title);
         selArticle.setBody(body);
 
-            rs.put("mssultCode", "S-1");
-            rs.put("msg", String.format("%d번 게시물이 수정되었습니다.", id));
+//            rs.put("mssultCode", "S-1");
+//            rs.put("msg", String.format("%d번 게시물이 수정되었습니다.", id));
+//            rs.put("id", id);
 
-        rs.put("id", id);
-
-        return rs;
+        return Util.mapOf("mssultCode", "S-1", "msg", String.format("%d번 게시물이 수정되었습니다.", id), "id", id);
     }
 }
