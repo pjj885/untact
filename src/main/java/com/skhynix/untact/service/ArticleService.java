@@ -13,14 +13,14 @@ public class ArticleService {
     private int articlesLastId;
     private List<Article> articles;
 
-    public ArticleService(){
-    // 멤버변수 초기화
-    articlesLastId = 0;
-    articles = new ArrayList<>();
+    public ArticleService() {
+        // 멤버변수 초기화
+        articlesLastId = 0;
+        articles = new ArrayList<>();
 
-    // 게시물 2개 생성
-        articles.add(new Article(++articlesLastId, "2020-05-01","2020-05-01", "제목1", "내용1"));
-        articles.add(new Article(++articlesLastId, "2020-05-01", "2020-05-01", "제목2", "내용2"));
+        // 게시물 2개 생성
+        articles.add(new Article(++articlesLastId, "2020-12-12 12:12:12", "2020-12-12 12:12:12", "제목1", "내용1"));
+        articles.add(new Article(++articlesLastId, "2020-12-12 12:12:12", "2020-12-12 12:12:12", "제목2", "내용2"));
     }
 
     public Article getArticle(int id) {
@@ -29,11 +29,24 @@ public class ArticleService {
                 return article;
             }
         }
+
         return null;
     }
 
-    public List<Article> getArticle() {
-        return articles;
+    public List<Article> getArticles(String searchKeyword) {
+        if ( searchKeyword == null ) {
+            return articles;
+        }
+
+        List<Article> filtered = new ArrayList<>();
+
+        for ( Article article : articles ) {
+            if ( article.getTitle().contains(searchKeyword) ) {
+                filtered.add(article);
+            }
+        }
+
+        return filtered;
     }
 
     public ResultData add(String title, String body) {
@@ -42,6 +55,7 @@ public class ArticleService {
         String updateDate = regDate;
 
         articles.add(new Article(id, regDate, updateDate, title, body));
+
         return new ResultData("S-1", "성공하였습니다.", "id", id);
     }
 
@@ -52,6 +66,7 @@ public class ArticleService {
                 return new ResultData("S-1", "삭제하였습니다.", "id", id);
             }
         }
+
         return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.", "id", id);
     }
 
@@ -62,6 +77,6 @@ public class ArticleService {
         article.setBody(body);
         article.setUpdateDate(Util.getNowDateStr());
 
-        return new ResultData("S-1", String.format("%d번 게시물이 수정되었습니다.", id));
+        return new ResultData("S-1", "게시물을 수정하였습니다.", "id", id);
     }
 }
