@@ -3,17 +3,12 @@ package com.skhynix.untact.controller;
 import com.skhynix.untact.dto.Article;
 import com.skhynix.untact.dto.ResultData;
 import com.skhynix.untact.service.ArticleService;
-import com.skhynix.untact.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class UsrArticleController {
@@ -60,7 +55,7 @@ public class UsrArticleController {
             return new ResultData("F-1","body를 입력해주세요.");
         }
 
-        return articleService.add(title, body);
+        return articleService.addArticle(title, body);
 
     }
 
@@ -95,7 +90,7 @@ public class UsrArticleController {
             return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
         }
 
-        return articleService.modify(id, title, body);
+        return articleService.modifyArticle(id, title, body);
 
     }
 }
