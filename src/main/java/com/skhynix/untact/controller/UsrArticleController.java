@@ -7,6 +7,7 @@ import com.skhynix.untact.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
@@ -28,7 +29,15 @@ public class UsrArticleController {
 
     @RequestMapping("usr/article/list")
     @ResponseBody
-    public List<Article> showList(String searchKeyword) {
+    public List<Article> showList(String searchKeywordType, String searchKeyword) {
+        if (searchKeywordType != null) {
+            searchKeywordType = searchKeywordType.trim();
+        }
+
+        if (searchKeywordType == null || searchKeywordType.length() == 0) {
+            searchKeywordType = "titleAndBody";
+        }
+
         if (searchKeyword != null && searchKeyword.length() == 0) {
             searchKeyword = null;
         }
@@ -37,7 +46,7 @@ public class UsrArticleController {
             searchKeyword = searchKeyword.trim();
         }
 
-        return articleService.getArticles(searchKeyword);
+        return articleService.getArticles(searchKeywordType, searchKeyword);
     }
 
     @RequestMapping("/usr/article/doAdd")
