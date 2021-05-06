@@ -65,7 +65,7 @@ public class ArticleDao {
         return filtered;
     }
 
-    public static int addArticle(String title, String body) {
+    public int addArticle(String title, String body) {
         int id = ++articlesLastId;
         String regDate = Util.getNowDateStr();
         String updateDate = regDate;

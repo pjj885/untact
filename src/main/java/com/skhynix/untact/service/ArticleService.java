@@ -18,7 +18,7 @@ public class ArticleService {
     }
 
     public ResultData addArticle(String title, String body) {
-        int id = ArticleDao.addArticle(title, body);
+        int id = articleDao.addArticle(title, body);
         return new ResultData("S-1", "성공하였습니다.", "id", id);
     }
 
