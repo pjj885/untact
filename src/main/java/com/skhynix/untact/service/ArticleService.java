@@ -20,14 +20,14 @@ public class ArticleService {
     public ResultData addArticle(String title, String body) {
         articleDao.addArticle(title, body);
 
-        //임시생성
-        int id = 1;
+        int id = 1; // 임시
 
         return new ResultData("S-1", "성공하였습니다.", "id", id);
     }
 
     public ResultData deleteArticle(int id) {
         articleDao.deleteArticle(id);
+
         return new ResultData("S-1", "삭제하였습니다.", "id", id);
     }
 
