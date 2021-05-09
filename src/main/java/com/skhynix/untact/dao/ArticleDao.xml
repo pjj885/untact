@@ -31,16 +31,17 @@
     </insert>
 
     <delete id="deleteArticle">
-        DELETE FROM article
+        DELETE
+        FROM article
         WHERE id = #{id}
     </delete>
 
     <update id="modifyArticle">
         UPDATE article
         SET updateDate = NOW(),
-            title =
+            title      =
                 #{title},
-            `body` = #{body}
+            `body`     = #{body}
         WHERE id = #{id}
     </update>
 

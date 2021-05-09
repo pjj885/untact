@@ -1,10 +1,10 @@
 #데이터베이스 생성
 DROP
-DATABASE IF EXISTS untactTeacher;
+DATABASE IF EXISTS untact;
 CREATE
-DATABASE untactTeacher;
+DATABASE untact;
 USE
-untactTeacher;
+untact;
 
 #게시물 테이블 생성
 CREATE TABLE article
